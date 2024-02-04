@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PerformanceAssessment;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Auth;
 
 class PerformanceAssessmentController extends Controller
 {
@@ -17,8 +18,9 @@ class PerformanceAssessmentController extends Controller
     {
         $data = PerformanceAssessment::all();
         $employee = Employee::all();
+        $user = Auth::user()->type;
 
-        return view('performance.index', compact('data','employee'));
+        return view('performance.index', compact('data','employee','user'));
     }
 
     /**
@@ -47,9 +49,7 @@ class PerformanceAssessmentController extends Controller
         $data->kedisiplinan = $request->kedisiplinan;
         $data->pengetahuan_produk = $request->pengetahuan_produk;
         $data->komunikasi = $request->komunikasi;
-        $data->average = round(($data->pelayanan + $data->kebersihan + 
-                            $data->kerjasama + $data->kedisiplinan + 
-                            $data->pengetahuan_produk + $data->komunikasi) / 6, 2);
+        $data->average = $request->rata_rata;
         $data->save();
 
         return redirect()->route('performance.index')->withToastSuccess('Data penilaian berhasil ditambah');

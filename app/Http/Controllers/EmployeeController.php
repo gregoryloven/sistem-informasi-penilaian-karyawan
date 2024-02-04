@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Auth;
 
 class EmployeeController extends Controller
 {
@@ -17,8 +18,9 @@ class EmployeeController extends Controller
     {
         $data = Employee::all();
         $role = Role::all();
+        $user = Auth::user()->type;
 
-        return view('employee.index', compact('data','role'));
+        return view('employee.index', compact('data','role','user'));
     }
 
     /**

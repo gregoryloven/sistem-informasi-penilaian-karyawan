@@ -14,8 +14,9 @@
         </div>
 
         <div class="section-body">
+        @if($user == 1)
             <a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Penilaian</a><br><br>
-
+        @endif
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     Daftar Penilaian Karyawan 
@@ -52,6 +53,7 @@
                                     <td>{{$d->komunikasi}}</td>
                                     <td>{{$d->average}}</td>
                                     <td>
+                                    @if($user == 1)
                                         <form id="delete-form-{{ $d->id }}" action="{{ route('performance.destroy', $d->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
@@ -60,6 +62,7 @@
                                             <input type="hidden" class="form-control" id='id' name='id' placeholder="Type your name" value="{{$d->id}}">
                                             <button type="button" class="btn btn-icon btn-danger" data-id="{{ $d->id }}"><i class="fa fa-trash"></i></button>                                   
                                         </form>
+                                    @endif
                                     </td>
                                 </tr>
                                 @endforeach
@@ -86,36 +89,44 @@
                     @csrf
                     <div class="form-group">
                         <label>Karyawan</label>
-                        <select class="form-control" id='employee_id' name='employee_id'>
+                        <select class="form-control" id='employee_id' name='employee_id' required>
                             <option value="" disabled selected>Pilih</option>
                                 @foreach($employee as $c)
                                 <option value="{{ $c->id }}">{{ $c->nama }}</option>
                                 @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Pelayanan</label>
-                        <input type="number" class="form-control" id='pelayanan' name='pelayanan' min="1" max="100" required>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label>Pelayanan</label>
+                            <input type="number" class="form-control nilai" id='pelayanan' name='pelayanan' min="1" max="100" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Kebersihan</label>
+                            <input type="number" class="form-control nilai" id='kebersihan' name='kebersihan' min="1" max="100" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Kerjasama</label>
+                            <input type="number" class="form-control nilai" id='kerjasama' name='kerjasama' min="1" max="100" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label>Kedisiplinan</label>
+                            <input type="number" class="form-control nilai" id='kedisiplinan' name='kedisiplinan' min="1" max="100" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Pengetahuan Produk</label>
+                            <input type="number" class="form-control nilai" id='pengetahuan_produk' name='pengetahuan_produk' min="1" max="100" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Komunikasi</label>
+                            <input type="number" class="form-control nilai" id='komunikasi' name='komunikasi' min="1" max="100" required>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label>Kebersihan</label>
-                        <input type="number" class="form-control" id='kebersihan' name='kebersihan' min="1" max="100" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Kerjasama</label>
-                        <input type="number" class="form-control" id='kerjasama' name='kerjasama' min="1" max="100" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Kedisiplinan</label>
-                        <input type="number" class="form-control" id='kedisiplinan' name='kedisiplinan' min="1" max="100" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Pengetahuan Produk</label>
-                        <input type="number" class="form-control" id='pengetahuan_produk' name='pengetahuan_produk' min="1" max="100" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Komunikasi</label>
-                        <input type="number" class="form-control" id='komunikasi' name='komunikasi' min="1" max="100" required>
+                        <label for="rataRata">Nilai Rata-Rata</label>
+                        <input type="text" class="form-control" id="rataRata" name="rata_rata" readonly>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -142,6 +153,17 @@
 
 @section('javascript')
 <script>
+
+    // Hitung rata-rata secara otomatis saat nilai berubah
+    $('.nilai').on('input', function() {
+        var total = 0;
+        $('.nilai').each(function() {
+            total += parseInt($(this).val()) || 0;
+        });
+
+        var rataRata = total / $('.nilai').length;
+        $('#rataRata').val(rataRata.toFixed(2));
+    });
 
 function EditForm(id)
 {

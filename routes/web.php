@@ -34,3 +34,7 @@ Route::post('/laporanHarian/searchByDate', [LaporanController::class, 'searchByD
 
 Route::get('laporanBulanan', [LaporanController::class, 'laporanBulanan'])->name('laporan.laporanBulanan');
 Route::post('/laporanBulanan/searchByMonth', [LaporanController::class, 'searchByMonth'])->name('laporan.searchByMonth');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -14,8 +14,9 @@
         </div>
 
         <div class="section-body">
+            @if($user == 1)
             <a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Karyawan</a><br><br>
-
+            @endif
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     Daftar Karyawan 
@@ -40,6 +41,7 @@
                                     <td>{{$d->nama}}</td>
                                     <td>{{$d->role->nama}}</td>
                                     <td>
+                                    @if($user == 1)
                                         <form id="delete-form-{{ $d->id }}" action="{{ route('employee.destroy', $d->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
@@ -49,6 +51,7 @@
                                             <button type="button" class="btn btn-icon btn-danger" data-id="{{ $d->id }}"><i class="fa fa-trash"></i></button>                                   
                                         </form>
                                     </td>
+                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>

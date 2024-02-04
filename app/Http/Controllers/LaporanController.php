@@ -20,7 +20,7 @@ class LaporanController extends Controller
     
         // Konversi format tanggal jika diperlukan
         $selectedDate = Carbon::createFromFormat('Y-m-d', $selectedDate);
-    
+        $formattedDate = $selectedDate->format('d M Y');
         // Lakukan operasi pencarian berdasarkan tanggal
         $performances = PerformanceAssessment::whereDate('created_at', $selectedDate)->get();
     
@@ -30,7 +30,7 @@ class LaporanController extends Controller
         // $performances = PerformanceAssessment::whereBetween('created_at', [$startDate, $endDate])->get();
     
         // Kembalikan atau tampilkan hasil pencarian
-        return view('laporan.result_harian', compact('performances'));
+        return view('laporan.result_harian', compact('performances', 'formattedDate'));
     }
 
     public function laporanBulanan(Request $request)
@@ -45,10 +45,11 @@ class LaporanController extends Controller
         ]);
 
         $selectedMonth = $request->selected_month;
+        $monthName = Carbon::createFromFormat('m', $selectedMonth)->format('F');
 
         $performances = PerformanceAssessment::whereMonth('created_at', $selectedMonth)->get();
 
-        return view('laporan.result_bulanan', compact('performances'));
+        return view('laporan.result_bulanan', compact('performances','monthName'));
     }
 
 

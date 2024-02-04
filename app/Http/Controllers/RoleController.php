@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Auth;
 
 class RoleController extends Controller
 {
@@ -15,8 +16,9 @@ class RoleController extends Controller
     public function index()
     {
         $data = Role::all();
+        $user = Auth::user()->type;
 
-        return view('role.index', compact('data'));
+        return view('role.index', compact('data','user'));
     }
 
     /**
