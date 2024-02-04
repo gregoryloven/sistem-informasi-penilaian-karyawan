@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Models\Employee;
+use App\Models\Employee;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -14,7 +15,10 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        $data = Employee::all();
+        $role = Role::all();
+
+        return view('employee.index', compact('data','role'));
     }
 
     /**
@@ -35,13 +39,18 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = new Employee();
+        $data->role_id = $request->role_id;
+        $data->nama = $request->nama;
+        $data->save();
+
+        return redirect()->route('employee.index')->withToastSuccess('Data karyawan berhasil ditambah');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Models\Employee  $employee
+     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
     public function show(Employee $employee)
@@ -52,7 +61,7 @@ class EmployeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Models\Employee  $employee
+     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
     public function edit(Employee $employee)
@@ -64,22 +73,44 @@ class EmployeeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Models\Employee  $employee
+     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Employee $employee)
     {
-        //
+        $employee->update([
+            'role_id' => $request->role_id,
+            'nama' => $request->nama
+        ]);
+
+        return redirect()->route('employee.index')->withToastSuccess('Data karyawan berhasil diubah');
+    
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Models\Employee  $employee
+     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
     public function destroy(Employee $employee)
     {
-        //
+        try {
+            $employee->delete();
+            return redirect()->route('employee.index')->withToastSuccess('Data karyawan berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->route('employee.index')->withToastError('Data karyawan gagal dihapus karena digunakan pada data lain');
+        }
+    }
+
+    public function EditForm(Request $request)
+    {
+        $id = $request->get("id");
+        $data = Employee::find($id);
+        $role = Role::all();
+
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('employee.EditForm',compact('data','role'))->render()),200);
     }
 }
