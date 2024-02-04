@@ -31,3 +31,6 @@ Route::resource('performance', PerformanceAssessmentController::class);
 
 Route::get('laporanHarian', [LaporanController::class, 'laporanHarian'])->name('laporan.laporanHarian');
 Route::post('/laporanHarian/searchByDate', [LaporanController::class, 'searchByDate'])->name('laporan.searchByDate');
+
+Route::get('laporanBulanan', [LaporanController::class, 'laporanBulanan'])->name('laporan.laporanBulanan');
+Route::post('/laporanBulanan/searchByMonth', [LaporanController::class, 'searchByMonth'])->name('laporan.searchByMonth');

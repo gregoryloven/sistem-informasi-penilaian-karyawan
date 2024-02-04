@@ -33,4 +33,23 @@ class LaporanController extends Controller
         return view('laporan.result_harian', compact('performances'));
     }
 
+    public function laporanBulanan(Request $request)
+    {
+        return view('laporan.bulanan');
+    }
+
+    public function searchByMonth(Request $request)
+    {
+        $request->validate([
+            'selected_month' => 'required',
+        ]);
+
+        $selectedMonth = $request->selected_month;
+
+        $performances = PerformanceAssessment::whereMonth('created_at', $selectedMonth)->get();
+
+        return view('laporan.result_bulanan', compact('performances'));
+    }
+
+
 }
