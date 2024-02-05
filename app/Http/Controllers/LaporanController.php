@@ -52,5 +52,4 @@ class LaporanController extends Controller
         return view('laporan.result_bulanan', compact('performances','monthName'));
     }
 
-
 }

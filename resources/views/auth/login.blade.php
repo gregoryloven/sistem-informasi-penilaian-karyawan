@@ -42,9 +42,9 @@
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="type" id="user" value="0" {{ old('type') === '0' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="user">
-                                        User
+                                    <input class="form-check-input" type="radio" name="type" id="karyawan" value="0" {{ old('type') === '0' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="karyawan">
+                                        Karyawan
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">

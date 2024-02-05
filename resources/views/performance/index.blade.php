@@ -14,7 +14,7 @@
         </div>
 
         <div class="section-body">
-        @if($user == 1)
+        @if($user == 2)
             <a href="#modalCreate" data-toggle='modal' class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Penilaian</a><br><br>
         @endif
             <div class="card shadow mb-4">
@@ -53,7 +53,7 @@
                                     <td>{{$d->komunikasi}}</td>
                                     <td>{{$d->average}}</td>
                                     <td>
-                                    @if($user == 1)
+                                    @if($user == 2)
                                         <form id="delete-form-{{ $d->id }}" action="{{ route('performance.destroy', $d->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
@@ -83,7 +83,7 @@
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Tambah Karyawan</h4>
+                    <h4 class="modal-title">Tambah Penilaian</h4>
                 </div>
                 <div class="modal-body">
                     @csrf
@@ -92,7 +92,7 @@
                         <select class="form-control" id='employee_id' name='employee_id' required>
                             <option value="" disabled selected>Pilih</option>
                                 @foreach($employee as $c)
-                                <option value="{{ $c->id }}">{{ $c->nama }}</option>
+                                <option value="{{ $c->id }}">{{ $c->nama }} - {{$c->role->nama}}</option>
                                 @endforeach
                         </select>
                     </div>

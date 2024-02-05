@@ -4,13 +4,13 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-          <h1>Hasil Pecarian Laporan Harian</h1>
+          <h1>Hasil Pencarian Laporan Harian</h1>
         </div>
 
         <div class="section-body">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    Hasil Pecarian Laporan Harian {{$formattedDate}}
+                    Hasil Pencarian Laporan Harian {{$formattedDate}}
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
