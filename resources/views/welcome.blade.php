@@ -31,7 +31,7 @@
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
-            height: 125vh; /* Menyesuaikan tinggi hero banner */
+            height: 100vh; /* Menyesuaikan tinggi hero banner */
             display: flex;
             justify-content: center;
             align-items: center;
